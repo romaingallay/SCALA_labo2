@@ -26,5 +26,22 @@ object Dictionary {
     "assoiffée" -> "assoiffe",
     "affamé" -> "affame",
     "affamée" -> "affame",
+    "maison" -> "maison",
+    "cailler" -> "cailler",
+    "farmer" -> "farmer",
+    "boxer" -> "boxer",
+    "wittekop" -> "wittekop",
+    "punkipa" -> "punkipa",
+    "jackhammer" -> "jackhammer",
+    "ténébreuse" -> "tenebreuse",
+    "chips" -> "chips",
+    "combien" -> "combien",
+    "coûte" -> "couter",
+    "coûtent" -> "couter",
+    "quel" -> "quel",
+    "connaître" -> "connaitre",
+    "mon" -> "mon",
+    "solde" -> "solde",
+
   )
 }
