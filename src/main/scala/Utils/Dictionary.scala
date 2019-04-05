@@ -39,9 +39,17 @@ object Dictionary {
     "coûte" -> "couter",
     "coûtent" -> "couter",
     "quel" -> "quel",
+    "quels" -> "quel",
     "connaître" -> "connaitre",
     "mon" -> "mon",
     "solde" -> "solde",
+    "prix" -> "prix",
+    "le" -> "le",
+    "la" -> "le",
+    "l" -> "le",
+    "de" -> "de",
+    "du" -> "de",
+    "d" -> "de"
 
   )
 }
