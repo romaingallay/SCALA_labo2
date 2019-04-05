@@ -46,4 +46,8 @@ object Tokens {
   // Test
   val ASSOIFFE : Token = 13
   val AFFAME : Token = 14
+
+  def product(token: Token) = token > 5 && token < 9
+
+  def typeProduct(token: Token) = token > 16 && token < 25
 }
