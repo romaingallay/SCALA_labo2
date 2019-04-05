@@ -1,6 +1,6 @@
 package Chat
 
-import Chat.Tokens._
+import Chat.Tokens.{APPELLER, _}
 import Utils.Dictionary.dictionary
 import Utils.SpellChecker._
 
@@ -19,6 +19,26 @@ class Tokenizer(input: String) {
     case "croissant" => CROISSANT
     case "assoiffe" => ASSOIFFE
     case "affame" => AFFAME
+    case "appeller" => APPELER
+    case "commander" => COMMANDER
+    case "connaitre" => CONNAITRE
+    case "boxer" => BOXER
+    case "wittekop" => WITTEKOP
+    case "punkipa" => PUNKIPA
+    case "jackhammer" => JACKHAMMER
+    case "tenebreuse" => TENEBREUSE
+    case "farmer" => FARMER
+    case "maison" => MAISON
+    case "cailler" => CAILLER
+    case "couter" => COUTER
+    case "combien" => COMBIEN
+    case "mon" => MON
+    case "me" => ME
+    case "solde" => SOLDE
+    case "quel" => QUEL
+    case "prix" => PRIX
+    case "le" => LE
+    case "de" => DE
     case p if p.startsWith("_") && p.length > 1 => PSEUDO // If the word starts with '_' and has more than one character it is a pseudonym.
     case n if n.forall(Character.isDigit) => NUM // If every character is a number, the word thus is a number.
     case _ => UNKNOWN
