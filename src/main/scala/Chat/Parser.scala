@@ -1,14 +1,16 @@
 package Chat
 
 import Chat.Tokens._
+import Data.TypeProduct
 import Tree._
+import com.sun.tools.javac.jvm.Items
 
 // TODO - step 4
 class Parser(tokenizer: Tokenizer) {
   import tokenizer._
 
   var curTuple: (String, Token) = ("unknown", UNKNOWN)
-  
+
   def curValue: String = curTuple._1
   def curToken: Token = curTuple._2
 
@@ -31,26 +33,81 @@ class Parser(tokenizer: Tokenizer) {
     sys.exit(1)
   }
 
+  def extractClientName(clientName:String): String ={
+    curValue.substring(1).toLowerCase()
+  }
+
   /** the root method of the parser: parses an entry phrase */
   def parsePhrases() : ExprTree = {
     if (curToken == BONJOUR) eat(BONJOUR)
-    if (curToken == JE )
-    {
+    if (curToken == JE ) {
       eat(JE)
+      if(curToken == ETRE){
+        eat(ETRE)
+        if (curToken == ASSOIFFE) {
+          // Here we do not "eat" the token, because we want to have a custom 2-parameters "expected" if the user gave a wrong token.
+          readToken()
+          Thirsty()
+        } /** ex: je etre assoifé **/
+        else if (curToken == AFFAME) {
+          readToken()
+          Hungry()
+        } /** ex: je etre affamé **/
+        else if (curToken == PSEUDO) {
+          val clientName = extractClientName(curValue)
+          readToken()
+          Identification(clientName)
+        } /** ex: je etre _PSEUDO **/
+        else expected(ASSOIFFE, AFFAME, PSEUDO)
+      } /** ex: je etre **/
+      else if (curToken == ME){
+        eat(ME)
+        eat(APPELER)
+        val clientName = extractClientName(curValue)
+        Identification(clientName)
+      } /** ex: je me appeler _PSEUDO **/
+      else if (curToken == VOULOIR) {
+        readToken()
+        if(curToken == COMMANDER) {
+          readToken()
+          Command(parseCommande())
+        } /** ex: je vouloir commander xxx **/
+        else if (curToken == CONNAITRE) {
+          readToken()
+          eat(MON)
+          eat(SOLDE)
+          Solde()
+        } /** ex: je vouloir connaitre mon solde **/
+        else expected(COMMANDER, CONNAITRE)
+      } /** ex: je vouloir **/
+      else expected(ME, VOULOIR)
+    } /** ex: je **/
+    else if (curToken == COMBIEN) {
+      eat(COMBIEN)
+      eat(COUTER)
+      Price(parseCommande())
+    } /** ex: combien coute xxx **/
+    else if (curToken == QUEL) {
+      readToken()
       eat(ETRE)
-      if (curToken == ASSOIFFE) {
-        // Here we do not "eat" the token, because we want to have a custom 2-parameters "expected" if the user gave a wrong token.
-        readToken()
-        Thirsty()
-      }
-      else if (curToken == AFFAME) {
-        readToken()
-        Hungry()
-      }
-      else expected(ASSOIFFE, AFFAME)
+      eat(LE)
+      eat(PRIX)
+      eat(DE)
+      Price(parseCommande())
     }
-    else expected(BONJOUR, JE)
+    /** ex: prix de xxx **/
+    else expected(BONJOUR, JE,QUEL,COMBIEN)
   }
+
+
+  def parseCommande(): ExprTree = {
+    var numberProducts:Int = 0
+    var orderedProduct: Product = null
+    var typeProduct: TypeProduct = null
+
+    Articles(Article(product,typeProduct),numberProducts)
+  }
+
 
   // Start the process by reading the first token.
   readToken()
