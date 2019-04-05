@@ -16,6 +16,11 @@ class Product(name:String, var typeProducts: Set[TypeProduct], var defaultTypePr
     typeProducts = typeProducts ++ newTypeProduct
   }
 
+  def getTypeProduct(name: String): TypeProduct =
+    typeProducts.find(x => x.name  == name ) match {
+      case None => defaultTypeProduct
+      case Some(typeProductFound) => typeProductFound
+    }
 
   override def toString: String = name + " :" + typeProducts.foldLeft(""){ (str, prod) =>  str + "\n\t" + prod.toString}
 
