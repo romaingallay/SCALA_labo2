@@ -1,7 +1,7 @@
 package Chat
 
 import Chat.Tokens._
-import Data.TypeProduct
+import Data.{Products, TypeProduct,Product}
 import Tree._
 import com.sun.tools.javac.jvm.Items
 
@@ -101,14 +101,50 @@ class Parser(tokenizer: Tokenizer) {
 
 
   def parseCommande(): ExprTree = {
-    var numberProducts:Int = 0
-    var orderedProduct: Product = null
-    var typeProduct: TypeProduct = null
 
-    Articles(Article(product,typeProduct),numberProducts)
+    var leftOp = ExprTree = parseArticle()
+    /** Here we match all the cases where an OR or an AND token is detected by our parser**/
+    curToken match {
+      case OU => {
+        readToken()
+        Or(leftOp, parseCommande())
+      }
+
+      case ET => {
+        readToken()
+        And(leftOp, parseCommande())
+      }
+      case _ => leftOp
+    }
   }
 
 
+  def parseArticle(): ExprTree = {
+    var numberProducts: Int = 0
+    var orderedProduct: Product = null
+    var typeProduct: TypeProduct = null
+
+    // case where we have a number
+    if (curToken == NUM) {
+      // cast it into an integer
+      numberProducts = curValue.toInt
+    } else expected(NUM)
+    readToken()
+
+    // case where we have the product name
+    if(Tokens.product(curToken)){
+      typeProduct = Products.getProduct(curValue)
+    } else expected(BIERE,CROISSANT,CHIPS)
+    readToken()
+    // case where a type of product is specified
+    typeProduct = orderedProduct.defaultTypeProduct
+    if(Tokens.typeProduct(curToken)){
+      typeProduct = orderedProduct.getTypeProduct(curValue)
+      eat(curToken)
+    }
+    Articles(Article(product,typeProduct),numberProducts)
+
+  }
   // Start the process by reading the first token.
   readToken()
 }
