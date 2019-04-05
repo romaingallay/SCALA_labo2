@@ -1,6 +1,6 @@
 package Chat
 
-import Chat.Tokens.{APPELLER, _}
+import Chat.Tokens.{_}
 import Utils.Dictionary.dictionary
 import Utils.SpellChecker._
 
