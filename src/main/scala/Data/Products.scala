@@ -18,16 +18,16 @@ object Products {
     allProducts = allProducts + product
   }
 
-  def addProductList(products: List[Product]) = allProducts = allProducts ++ products
+  def addProductList(products: Seq[Product]) = allProducts = allProducts ++ products
 
-  def getProduct(name: String): Product =
-    allProducts.find(x => x.getname()  == name ) match {
+  def getProduct(name: String): Product = {
+    allProducts.find(x => x.getname() == name) match {
+      case Some(productFound) => productFound
       case None => {
-        println(" No product with specified name retrieved !")
         throw new Error("Product with name " + name + " not retrieved !")
       }
-      case Some(productFound) => productFound
     }
+  }
 
   override def toString: String = allProducts.foldLeft("") { (str, p) => str + p.toString + "\n" }
 
