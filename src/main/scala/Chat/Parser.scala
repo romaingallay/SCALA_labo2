@@ -3,7 +3,6 @@ package Chat
 import Chat.Tokens._
 import Data.{Products, TypeProduct,Product}
 import Tree._
-import com.sun.tools.javac.jvm.Items
 
 // TODO - step 4
 class Parser(tokenizer: Tokenizer) {
@@ -102,7 +101,7 @@ class Parser(tokenizer: Tokenizer) {
 
   def parseCommande(): ExprTree = {
 
-    var leftOp = ExprTree = parseArticle()
+    var leftOp: ExprTree = parseArticle()
     /** Here we match all the cases where an OR or an AND token is detected by our parser**/
     curToken match {
       case OU => {
@@ -133,7 +132,7 @@ class Parser(tokenizer: Tokenizer) {
 
     // case where we have the product name
     if(Tokens.product(curToken)){
-      typeProduct = Products.getProduct(curValue)
+      orderedProduct = Products.getProduct(curValue)
     } else expected(BIERE,CROISSANT,CHIPS)
     readToken()
     // case where a type of product is specified
@@ -142,7 +141,7 @@ class Parser(tokenizer: Tokenizer) {
       typeProduct = orderedProduct.getTypeProduct(curValue)
       eat(curToken)
     }
-    Articles(Article(product,typeProduct),numberProducts)
+    Articles(Article(orderedProduct,typeProduct),numberProducts)
 
   }
   // Start the process by reading the first token.
