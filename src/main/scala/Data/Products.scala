@@ -65,7 +65,27 @@ object Products {
   val croissants:List[String] = List("Maison","Cailler")
 
 
+  val defaultBeer = new TypeProduct("boxer", 1)
+  val beerBrands: Set[TypeProduct] = Set(
+    new TypeProduct("farmer", 1),
+    new TypeProduct("wittekop", 2),
+    new TypeProduct("punkipa", 3),
+    new TypeProduct("jackhammer", 3),
+    new TypeProduct("tenebreuse", 4),
+    defaultBeer)
 
+  val defaultCroissant = new TypeProduct("maison", 2)
+  val croissantBrands: Set[TypeProduct] = Set(
+    new TypeProduct("cailler", 2),
+    defaultCroissant
+  )
+
+  // Create products
+  val beer = new Product("biere", beerBrands, defaultBeer)
+  var croissant = new Product("croissant", croissantBrands, defaultCroissant)
+
+  // Add products to the Products object
+  Products.addProductList(Seq(beer, croissant))
 }
 
 
