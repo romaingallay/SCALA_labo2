@@ -76,7 +76,9 @@ object Tree {
   case class Or(first: ExprTree, second: ExprTree) extends ExprTree {
     override def toString: String = first.toString + " ou " + second.toString
   }
-  case class Articles(article: Article, amount: Int) extends ExprTree
+  case class Articles(article: Article, amount: Int) extends ExprTree {
+    override def toString: String = amount.toString + " " + article.toString
+  }
   case class Article(product: Product, var typeProduct: TypeProduct = null) extends ExprTree {
     // set the typeProduct to the product's default one in case it is not specified
     if(typeProduct == null)
