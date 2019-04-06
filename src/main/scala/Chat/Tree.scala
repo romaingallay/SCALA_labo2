@@ -17,8 +17,13 @@ object Tree {
       * For example if we had a "+" node, we would add the values of its two children, then return the result.
       * @return the result of the computation
       */
-    def computePrice: Double = ???
-
+    def computePrice: Double = this match {
+      case Article(product, typeProduct) => typeProduct.price
+      case Articles(article, n) => n * article.computePrice
+      case And(leftOp, rightOp) => leftOp.computePrice + rightOp.computePrice
+      case Or(leftOp, rightOp) => Math.min(leftOp.computePrice, rightOp.computePrice)
+      case _ => 0
+    }
     /**
       * Return the output text of the current node, in order to write it in console.
       * @return the output text of the current node

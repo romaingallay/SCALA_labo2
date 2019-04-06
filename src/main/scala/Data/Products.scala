@@ -61,16 +61,16 @@ object Products {
     })
   }*/
 
-  val bieres:List[String] = List("boxer","farmer","wittekop","punkIpa","Jackhammer")
-  val croissants:List[String] = List("Maison","Cailler")
+  //val bieres:List[String] = List("boxer","farmer","wittekop","punkIpa","Jackhammer")
+  //val croissants:List[String] = List("Maison","Cailler")
 
 
   val defaultBeer = new TypeProduct("boxer", 1)
   val beerBrands: Set[TypeProduct] = Set(
     new TypeProduct("farmer", 1),
     new TypeProduct("wittekop", 2),
-    new TypeProduct("punkipa", 3),
     new TypeProduct("jackhammer", 3),
+    new TypeProduct("punkipa", 3),
     new TypeProduct("tenebreuse", 4),
     defaultBeer)
 
