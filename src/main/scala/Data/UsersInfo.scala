@@ -9,7 +9,7 @@ object UsersInfo {
   private val defaultSolde = 30
 
   // TODO: step 2 - create an attribute that will contain each user and its current balance.
-  private var accounts: mutable.HashMap[String, Int] = mutable.HashMap.empty[String, Int]
+  private var accounts: mutable.HashMap[String, Double] = mutable.HashMap()
 
   /**
     * Update an account by decreasing its balance.
@@ -20,17 +20,18 @@ object UsersInfo {
   // TODO: step 2
   def purchase(user: String, amount: Double)= {
     val solde = accounts(user) - amount
-    accounts + (user -> solde)
+    accounts += (user -> solde)
     solde
   }
 
   def addUser(user: String) = {
+    print("add user = " + user)
     accounts += (user -> 30)
     setActiveUser(user)
   }
 
   def setActiveUser(user: String) = {
-    accounts.getOrElse(user, accounts += (user -> defaultSolde))
+    accounts.getOrElse(user, accounts + (user -> defaultSolde))
     _activeUser = user
   }
 
