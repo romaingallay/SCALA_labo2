@@ -71,6 +71,7 @@ object Tree {
   }
   case class Or(first: ExprTree, second: ExprTree) extends ExprTree {
     override def toString: String =
+    // only output the cheaper product
       if (first.computePrice <= second.computePrice)
         first.toString
       else second.toString
