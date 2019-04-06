@@ -17,6 +17,7 @@ class Tokenizer(input: String) {
     case "ou" => OU
     case "biere" => BIERE
     case "croissant" => CROISSANT
+    case "chips" => CHIPS
     case "assoiffe" => ASSOIFFE
     case "affame" => AFFAME
     case "appeller" => APPELER
