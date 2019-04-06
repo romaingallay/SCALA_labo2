@@ -95,7 +95,7 @@ class Parser(tokenizer: Tokenizer) {
       Price(parseCommande())
     }
     /** ex: prix de xxx **/
-    else expected(BONJOUR, JE,QUEL,COMBIEN)
+    else expected(BONJOUR, JE,COMBIEN,QUEL)
   }
 
 
@@ -104,14 +104,13 @@ class Parser(tokenizer: Tokenizer) {
     var leftOp: ExprTree = parseArticle()
     /** Here we match all the cases where an OR or an AND token is detected by our parser**/
     curToken match {
-      case OU => {
-        readToken()
-        Or(leftOp, parseCommande())
-      }
-
       case ET => {
         readToken()
         And(leftOp, parseCommande())
+      }
+      case OU => {
+        readToken()
+        Or(leftOp, parseCommande())
       }
       case _ => leftOp
     }

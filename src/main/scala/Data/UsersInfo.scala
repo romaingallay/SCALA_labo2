@@ -25,7 +25,6 @@ object UsersInfo {
   }
 
   def addUser(user: String) = {
-    print("add user = " + user)
     accounts += (user -> 30)
     setActiveUser(user)
   }
@@ -37,5 +36,5 @@ object UsersInfo {
 
   def getActivateUser():String = _activeUser
 
-  def solde(user: String) = accounts.getOrElse(user, throw new Error("fuck off"))
+  def solde(user: String) = accounts.getOrElse(user, throw new Error("It seems like this user does not exist..."))
 }
