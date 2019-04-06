@@ -36,27 +36,23 @@ object Tree {
         UsersInfo.addUser(user)
         "Bonjour, " + user
       }
-      case Price(items) => "Cela coûte CHF " + items.computePrice
-      case other =>
-        if(UsersInfo.getActivateUser() == null)
-          "Veuillez d'abord vous identifier"
-        else other match {
-          case Solde() => "Le montant actuel de votre solde est de CHF " +
-            UsersInfo.solde(UsersInfo.getActivateUser())
-          case Command(basket) => {
-            // Compute the total price of the command
-            val totalPrice = basket.computePrice
-            // Check if there is enough money on user's account
-            // If there is not enough money, prevent the user, execute the command otherwise
-            val curBalance = UsersInfo.solde(UsersInfo.getActivateUser())
-            val newBalance =  UsersInfo.purchase(UsersInfo.getActivateUser(), totalPrice)
-            if(curBalance == newBalance)
-              "Solde insuffisante"
-            else
-              "Voici donc " + basket.toString + " ! Cela coûte CHF " + totalPrice.toString +
-                " et votre nouveau solde est de CHF " + newBalance
+      case Price(articles) => "Cela coûte CHF " + articles.computePrice + "."
+        // for the other commands, identification is needed
+      case command =>
+        if(UsersInfo.getActivateUser() != null) {
+          command match {
+            case Solde() => "Le montant actuel de votre solde est de CHF " +
+              UsersInfo.solde(UsersInfo.getActivateUser()) + "."
+            case Command(articles) => {
+              val price = articles.computePrice
+              val solde = UsersInfo.purchase(UsersInfo.getActivateUser(), price)
+                "Voici donc " + articles.toString + " ! Cela coûte CHF " + price.toString +
+                  " et votre nouveau solde est de CHF " + solde + "."
+            }
           }
-          case Price(basket) => "Cela coûte " + basket.computePrice.toString
+        }
+        else {
+          "Veuillez d'abord vous identifier."
         }
     }
   }
@@ -80,15 +76,9 @@ object Tree {
     override def toString: String = amount.toString + " " + article.toString
   }
   case class Article(product: Product, var typeProduct: TypeProduct = null) extends ExprTree {
-    // set the typeProduct to the product's default one in case it is not specified
+    // set the default product type if needed
     if(typeProduct == null)
-      if(product.defaultTypeProduct == null)
-        throw new Error("No typeProduct specified for item " + product.getname())
-      else
         typeProduct = product.defaultTypeProduct
-    // check if the typeProduct exists in the products typeProducts set
-    if(!product.typeProducts(typeProduct))
-      throw new Error("Brand " + typeProduct.name + " does not correspond to product " + product.getname())
 
     override def toString: String = {
       product.getname() + " " + typeProduct.name
