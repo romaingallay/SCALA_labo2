@@ -41,6 +41,7 @@ object Dictionary {
     "quel" -> "quel",
     "quels" -> "quel",
     "connaître" -> "connaitre",
+    "commander" -> "commander",
     "mon" -> "mon",
     "solde" -> "solde",
     "prix" -> "prix",
