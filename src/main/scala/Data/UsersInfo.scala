@@ -24,7 +24,10 @@ object UsersInfo {
     solde
   }
 
-  def addUser(user: String) = accounts += (user -> 30)
+  def addUser(user: String) = {
+    accounts += (user -> 30)
+    setActiveUser(user)
+  }
 
   def setActiveUser(user: String) = {
     accounts.getOrElse(user, accounts += (user -> defaultSolde))
