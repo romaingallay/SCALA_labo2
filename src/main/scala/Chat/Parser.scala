@@ -47,45 +47,45 @@ class Parser(tokenizer: Tokenizer) {
           // Here we do not "eat" the token, because we want to have a custom 2-parameters "expected" if the user gave a wrong token.
           readToken()
           Thirsty()
-        } /** ex: je etre assoifé **/
+        } /** ex: je etre assoifé */
         else if (curToken == AFFAME) {
           readToken()
           Hungry()
-        } /** ex: je etre affamé **/
+        } /** ex: je etre affamé */
         else if (curToken == PSEUDO) {
           val clientName = extractClientName(curValue)
           readToken()
           Identification(clientName)
-        } /** ex: je etre _PSEUDO **/
+        } /** ex: je etre _PSEUDO */
         else expected(ASSOIFFE, AFFAME, PSEUDO)
-      } /** ex: je etre **/
+      } /** ex: je etre */
       else if (curToken == ME){
         eat(ME)
         eat(APPELER)
         val clientName = extractClientName(curValue)
         Identification(clientName)
-      } /** ex: je me appeler _PSEUDO **/
+      } /** ex: je me appeler _PSEUDO */
       else if (curToken == VOULOIR) {
         readToken()
         if(curToken == COMMANDER) {
           readToken()
           Command(parseCommande())
-        } /** ex: je vouloir commander xxx **/
+        } /** ex: je vouloir commander xxx */
         else if (curToken == CONNAITRE) {
           readToken()
           eat(MON)
           eat(SOLDE)
           Solde()
-        } /** ex: je vouloir connaitre mon solde **/
+        } /** ex: je vouloir connaitre mon solde */
         else expected(COMMANDER, CONNAITRE)
-      } /** ex: je vouloir **/
+      } /** ex: je vouloir */
       else expected(ME, VOULOIR)
-    } /** ex: je **/
+    } /** ex: je */
     else if (curToken == COMBIEN) {
       eat(COMBIEN)
       eat(COUTER)
       Price(parseCommande())
-    } /** ex: combien coute xxx **/
+    } /** ex: combien coute xxx */
     else if (curToken == QUEL) {
       readToken()
       eat(ETRE)
@@ -94,7 +94,7 @@ class Parser(tokenizer: Tokenizer) {
       eat(DE)
       Price(parseCommande())
     }
-    /** ex: prix de xxx **/
+    /** ex: prix de xxx */
     else expected(BONJOUR, JE,COMBIEN,QUEL)
   }
 
@@ -102,7 +102,7 @@ class Parser(tokenizer: Tokenizer) {
   def parseCommande(): ExprTree = {
 
     var leftOp: ExprTree = parseArticle()
-    /** Here we match all the cases where an OR or an AND token is detected by our parser**/
+    /** Here we match all the cases where an OR or an AND token is detected by our parser */
     curToken match {
       case ET => {
         readToken()

@@ -34,7 +34,7 @@ object Tree {
       case Hungry() => "Pas de soucis, nous pouvons notamment vous offrir des croissants faits maisons !"
       case Identification(user) => {
         UsersInfo.addUser(user)
-        "Bonjour, " + user
+        "Bonjour, " + user + " !"
       }
       case Price(articles) => "Cela coûte CHF " + articles.computePrice + "."
         // for the other commands, identification is needed
@@ -70,7 +70,10 @@ object Tree {
     override def toString: String = first.toString + " et " + second.toString
   }
   case class Or(first: ExprTree, second: ExprTree) extends ExprTree {
-    override def toString: String = first.toString + " ou " + second.toString
+    override def toString: String =
+      if (first.computePrice <= second.computePrice)
+        first.toString
+      else second.toString
   }
   case class Articles(article: Article, amount: Int) extends ExprTree {
     override def toString: String = amount.toString + " " + article.toString

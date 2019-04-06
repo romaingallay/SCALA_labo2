@@ -51,6 +51,5 @@ object Dictionary {
     "de" -> "de",
     "du" -> "de",
     "d" -> "de"
-
   )
 }
